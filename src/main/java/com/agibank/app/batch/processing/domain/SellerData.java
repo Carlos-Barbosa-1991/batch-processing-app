@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 import org.springframework.format.annotation.NumberFormat;
 
 public class SellerData {
-	
+
 	private String idData;
-	
+
 	private String cpf;
-	
+
 	private String name;
-	
-	@NumberFormat(pattern="#0.00")
+
+	@NumberFormat(pattern = "#0.00")
 	private BigDecimal salary;
 
 	public String getIdData() {
@@ -46,5 +46,5 @@ public class SellerData {
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
 	}
-	
+
 }

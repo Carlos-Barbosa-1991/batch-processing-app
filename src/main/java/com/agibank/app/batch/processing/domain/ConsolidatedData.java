@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsolidatedData {
-	
+
 	private List<SellerData> sellerData;
-	
+
 	private List<ClientData> clientData;
-	
+
 	private List<SalesData> salesData;
-	
+
 	public ConsolidatedData() {
 		this.sellerData = new ArrayList<>();
 		this.clientData = new ArrayList<>();

@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 import org.springframework.format.annotation.NumberFormat;
 
 public class SalesItems {
-	
+
 	private String idItem;
-	
+
 	private Long itemQuantity;
-	
-	@NumberFormat(pattern="#0.00")
+
+	@NumberFormat(pattern = "#0.00")
 	private BigDecimal itemPrice;
 
 	public String getIdItem() {

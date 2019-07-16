@@ -4,27 +4,26 @@ import java.io.File;
 
 import com.agibank.app.batch.processing.utils.FileUtils;
 
-
 public class FileValidate {
-	
+
 	private FileUtils fileUtils;
-	
+
 	public FileValidate() {
-	
+
 	}
-	
+
 	public Boolean validateFileExistence(String fileName, File reportLocation) {
-		
+
 		String properFileName = fileUtils.removeExtentionFileName(fileName);
-		
-		File file = new File(reportLocation,"" + properFileName + ".done.dat");
-		
-		if(file.exists()) {
+
+		File file = new File(reportLocation, "" + properFileName + ".done.dat");
+
+		if (file.exists()) {
 			return true;
 		} else {
 			return false;
 		}
-		
+
 	};
 
 }

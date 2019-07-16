@@ -16,13 +16,13 @@ import com.agibank.app.batch.processing.utils.ConverterUtils;
 import com.agibank.app.batch.processing.validate.FileValidate;
 
 public class BatchProcessingService {
-	
-	private File fileLocation = new File(System.getProperty("user.home"),"\\data\\in\\");
-	private File reportLocation = new File(System.getProperty("user.home"),"\\data\\out\\");
+
+	private File fileLocation = new File(System.getProperty("user.home"), "\\data\\in\\");
+	private File reportLocation = new File(System.getProperty("user.home"), "\\data\\out\\");
 	private ConverterUtils converterUtils = new ConverterUtils();
 	private FileValidate fileValidate = new FileValidate();
 	private BatchProcessingCore batchCore = new BatchProcessingCore();
-	private ReportModels reportModels = new  ReportModels();
+	private ReportModels reportModels = new ReportModels();
 
 	public void startProcessing() {
 
@@ -35,16 +35,16 @@ public class BatchProcessingService {
 
 			do {
 
-				if(filesIn.length > initialQueue) {
+				if (filesIn.length > initialQueue) {
 					filesIn = this.repositoryListener();
 					initialQueue = filesIn.length - 1;
 					finalQueue = filesIn.length + 1;
 
 					for (int i = 0; i < filesIn.length; i++) {
 
-						if(!fileValidate.validateFileExistence(filesIn[i].getName(), reportLocation)) {
+						if (!fileValidate.validateFileExistence(filesIn[i].getName(), reportLocation)) {
 
-							System.out.println("\nInício do processamento do arquivo: ["+ filesIn[i].getName()+"]");
+							System.out.println("\nInício do processamento do arquivo: [" + filesIn[i].getName() + "]");
 							long start = System.currentTimeMillis();
 
 							Path path = Paths.get(filesIn[i].getPath());
@@ -55,19 +55,21 @@ public class BatchProcessingService {
 							for (String line : linesFile) {
 								consolidatedData = converterUtils.transformLines(line, consolidatedData);
 
-								if(consolidatedData == null) {
+								if (consolidatedData == null) {
 									continue;
 								}
 
-							}   
+							}
 
 							try {
-								Boolean statusGenerateReport = batchCore.generateReport(consolidatedData, filesIn[i].getName(), reportLocation);
+								Boolean statusGenerateReport = batchCore.generateReport(consolidatedData,
+										filesIn[i].getName(), reportLocation);
 
 								long elapsed = (System.currentTimeMillis() - start);
-								System.out.println("Arquivo: ["+ filesIn[i].getName()+ "]"+ " Tempo de processamento em milissegundos: [" + elapsed +"ms ]");
+								System.out.println("Arquivo: [" + filesIn[i].getName() + "]"
+										+ " Tempo de processamento em milissegundos: [" + elapsed + "ms ]");
 
-								if(!statusGenerateReport) {
+								if (!statusGenerateReport) {
 									continue;
 								}
 
@@ -77,7 +79,7 @@ public class BatchProcessingService {
 								e.printStackTrace();
 								continue;
 							}
-						} 
+						}
 					}
 				}
 
@@ -92,17 +94,17 @@ public class BatchProcessingService {
 
 	public File[] repositoryListener() throws IOException, InterruptedException {
 
-		//Delay devido a demora do sistema para escrever o arquivo na pasta de entrada
+		// Delay devido a demora do sistema para escrever o arquivo na pasta de entrada
 		Thread.sleep(2000);
 
-		File[] fileIn = fileLocation.listFiles(
-				new FileFilter() { 
-					public boolean accept(File b){
-						return b.getName().endsWith(".dat");}
-				});
+		File[] fileIn = fileLocation.listFiles(new FileFilter() {
+			public boolean accept(File b) {
+				return b.getName().endsWith(".dat");
+			}
+		});
 
 		return fileIn;
 
-	};	
+	};
 
 }

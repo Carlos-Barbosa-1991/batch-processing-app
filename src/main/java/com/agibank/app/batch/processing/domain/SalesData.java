@@ -7,23 +7,23 @@ import java.util.List;
 import org.springframework.format.annotation.NumberFormat;
 
 public class SalesData {
-	
+
 	private String idData;
-	
+
 	private String idSale;
-	
+
 	private List<SalesItems> salesItems;
-	
+
 	private String nameSalesman;
-	
-	@NumberFormat(pattern="#0.00")
+
+	@NumberFormat(pattern = "#0.00")
 	private BigDecimal saleValue;
 
 	public SalesData() {
 		this.saleValue = BigDecimal.ZERO;
 		this.salesItems = new ArrayList<>();
-	};
-	
+	}
+
 	public String getIdData() {
 		return idData;
 	}

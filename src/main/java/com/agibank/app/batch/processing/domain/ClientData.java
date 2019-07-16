@@ -1,13 +1,13 @@
 package com.agibank.app.batch.processing.domain;
 
 public class ClientData {
-	
+
 	private String idData;
-	
+
 	private String cnpj;
-	
+
 	private String name;
-	
+
 	private String businessArea;
 
 	public String getIdData() {
