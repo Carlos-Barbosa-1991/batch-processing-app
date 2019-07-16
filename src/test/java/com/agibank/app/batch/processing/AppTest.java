@@ -1,5 +1,6 @@
-package com.agibank.app.batch_processing_app;
+package com.agibank.app.batch.processing;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,21 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.agibank.app.batch_processing_app.core.BatchProcessingCore;
-import com.agibank.app.batch_processing_app.domain.ClientData;
-import com.agibank.app.batch_processing_app.domain.ConsolidatedData;
-import com.agibank.app.batch_processing_app.domain.SalesData;
-import com.agibank.app.batch_processing_app.domain.SalesItems;
-import com.agibank.app.batch_processing_app.domain.SellerData;
+import com.agibank.app.batch.processing.core.BatchProcessingCore;
+import com.agibank.app.batch.processing.domain.ClientData;
+import com.agibank.app.batch.processing.domain.ConsolidatedData;
+import com.agibank.app.batch.processing.domain.SalesData;
+import com.agibank.app.batch.processing.domain.SalesItems;
+import com.agibank.app.batch.processing.domain.SellerData;
+import com.agibank.app.batch.processing.utils.ConverterUtils;
+import com.agibank.app.batch.processing.utils.FileUtils;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AppTest {
+	
+	private File reportLocation = new File(System.getProperty("user.home"),"\\data\\out\\");
 	
 	public List<ClientData> clientDataTest(){
 		
@@ -130,7 +135,7 @@ public class AppTest {
 		consolidatedData.getSellerData().addAll(sellerDataTest());
 		consolidatedData.getSalesData().addAll(salesDataTest());
 		
-		Boolean statusGenerateReport = core.generateReport(consolidatedData, "teste.dat");
+		Boolean statusGenerateReport = core.generateReport(consolidatedData, "teste.dat", reportLocation);
 		Assert.assertTrue(statusGenerateReport);
 
     }
@@ -143,10 +148,11 @@ public class AppTest {
 		BatchProcessingCore core = new BatchProcessingCore();
 					
 		consolidatedData.getClientData().addAll(clientDataTest());
-		consolidatedData.getSellerData().addAll(new ArrayList<>());
+		consolidatedData.getSellerData().addAll(sellerDataTest());
 		consolidatedData.getSalesData().addAll(new ArrayList<>());
 		
-		Boolean statusGenerateReport = core.generateReport(consolidatedData, "teste.dat");
+		
+		Boolean statusGenerateReport = core.generateReport(consolidatedData, "teste.dat", reportLocation);
 		Assert.assertFalse(statusGenerateReport);
 
     }
@@ -155,7 +161,7 @@ public class AppTest {
     public void testTransform() throws Exception
     {
 		ConsolidatedData consolidatedData = new ConsolidatedData();		
-		BatchProcessingCore core = new BatchProcessingCore();
+		ConverterUtils converterUtils = new ConverterUtils();
 		
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("001ç1234567891234çPedroç50000");
@@ -164,7 +170,7 @@ public class AppTest {
 		
 		for (String l : line){
 			
-			consolidatedData = core.transform(l, consolidatedData);
+			consolidatedData = converterUtils.transformLines(l, consolidatedData);
 			
 		}
 		
@@ -176,11 +182,11 @@ public class AppTest {
     public void testTransformItems() throws Exception
     {
 			
-		BatchProcessingCore core = new BatchProcessingCore();
+		ConverterUtils converterUtils = new ConverterUtils();
 		
 		String items = "[1-10-100,2-30-2.50,3-40-3.10]";
 			
-		List<SalesItems> listItems = core.transformListItems(items);
+		List<SalesItems> listItems = converterUtils.transformListItems(items);
 
 		Assert.assertTrue(listItems.size() != 0);
 		
@@ -190,7 +196,7 @@ public class AppTest {
     public void testFileOutOfLayout() throws Exception
     {
 		ConsolidatedData consolidatedData = new ConsolidatedData();		
-		BatchProcessingCore core = new BatchProcessingCore();
+		ConverterUtils converterUtils = new ConverterUtils();
 		
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("0011234567891234Pedro50000");
@@ -199,7 +205,7 @@ public class AppTest {
 		
 		for (String l : line){
 			
-			consolidatedData = core.transform(l, consolidatedData);
+			consolidatedData = converterUtils.transformLines(l, consolidatedData);
 			
 		}
 		
@@ -211,11 +217,11 @@ public class AppTest {
     public void testTransformItemsOutOfLayout() throws Exception
     {
 			
-		BatchProcessingCore core = new BatchProcessingCore();
+		ConverterUtils converterUtils = new ConverterUtils();
 		
 		String items = "[110-100,230-2.50,340-3.10]";
 			
-		List<SalesItems> listItems = core.transformListItems(items);
+		List<SalesItems> listItems = converterUtils.transformListItems(items);
 
 		Assert.assertNull(listItems);
 		

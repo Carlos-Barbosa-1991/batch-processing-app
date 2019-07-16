@@ -1,4 +1,4 @@
-package com.agibank.app.batch_processing_app.domain;
+package com.agibank.app.batch.processing.domain;
 
 import java.util.ArrayList;
 import java.util.List;
