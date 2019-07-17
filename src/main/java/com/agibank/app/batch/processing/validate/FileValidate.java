@@ -6,7 +6,7 @@ import com.agibank.app.batch.processing.utils.FileUtils;
 
 public class FileValidate {
 
-	private FileUtils fileUtils;
+	private FileUtils fileUtils = new FileUtils();
 
 	public FileValidate() {
 

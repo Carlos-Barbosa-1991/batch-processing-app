@@ -11,13 +11,14 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.agibank.app.batch.processing.builder.SalesDataBuilder;
 import com.agibank.app.batch.processing.core.BatchProcessingCore;
 import com.agibank.app.batch.processing.domain.ClientData;
 import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.SalesData;
 import com.agibank.app.batch.processing.domain.SalesItems;
 import com.agibank.app.batch.processing.domain.SellerData;
-import com.agibank.app.batch.processing.utils.ConverterUtils;
+import com.agibank.app.batch.processing.factory.ConsolidatedDataFactory;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -152,9 +153,9 @@ public class AppTest {
 	}
 
 	@Test
-	public void testTransform() throws Exception {
+	public void testTransformOk() throws Exception {
 		ConsolidatedData consolidatedData = new ConsolidatedData();
-		ConverterUtils converterUtils = new ConverterUtils();
+		ConsolidatedDataFactory consolidatedDataFactory = new ConsolidatedDataFactory();
 
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("001ç1234567891234çPedroç50000");
@@ -163,7 +164,7 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = converterUtils.transformLines(l, consolidatedData);
+			consolidatedData = consolidatedDataFactory.constructObjects(l, consolidatedData);
 
 		}
 
@@ -172,13 +173,13 @@ public class AppTest {
 	}
 
 	@Test
-	public void testTransformItems() throws Exception {
+	public void testTransformItemsOk() throws Exception {
 
-		ConverterUtils converterUtils = new ConverterUtils();
+		SalesDataBuilder salesDataBuilder = new SalesDataBuilder();
 
 		String items = "[1-10-100,2-30-2.50,3-40-3.10]";
 
-		List<SalesItems> listItems = converterUtils.transformListItems(items);
+		List<SalesItems> listItems = salesDataBuilder.transformListItems(items);
 
 		Assert.assertTrue(listItems.size() != 0);
 
@@ -187,7 +188,7 @@ public class AppTest {
 	@Test
 	public void testFileOutOfLayout() throws Exception {
 		ConsolidatedData consolidatedData = new ConsolidatedData();
-		ConverterUtils converterUtils = new ConverterUtils();
+		ConsolidatedDataFactory consolidatedDataFactory = new ConsolidatedDataFactory();
 
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("0011234567891234Pedro50000");
@@ -196,7 +197,7 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = converterUtils.transformLines(l, consolidatedData);
+			consolidatedData = consolidatedDataFactory.constructObjects(l, consolidatedData);
 
 		}
 
@@ -207,11 +208,11 @@ public class AppTest {
 	@Test
 	public void testTransformItemsOutOfLayout() throws Exception {
 
-		ConverterUtils converterUtils = new ConverterUtils();
+		SalesDataBuilder salesDataBuilder = new SalesDataBuilder();
 
 		String items = "[110-100,230-2.50,340-3.10]";
 
-		List<SalesItems> listItems = converterUtils.transformListItems(items);
+		List<SalesItems> listItems = salesDataBuilder.transformListItems(items);
 
 		Assert.assertNull(listItems);
 

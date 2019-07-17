@@ -17,6 +17,12 @@ public class ConsolidatedData {
 		this.salesData = new ArrayList<>();
 	};
 
+	public ConsolidatedData(List<SellerData> sellerData, List<ClientData> clientData, List<SalesData> salesData) {
+		this.sellerData = sellerData;
+		this.clientData = clientData;
+		this.salesData = salesData;
+	};
+
 	public List<SellerData> getSellerData() {
 		return sellerData;
 	}
