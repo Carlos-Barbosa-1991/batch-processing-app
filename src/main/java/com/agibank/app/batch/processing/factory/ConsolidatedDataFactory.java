@@ -40,6 +40,7 @@ public class ConsolidatedDataFactory {
 				consolidatedData.getClientData().addAll(listClientData);
 
 			} else if (data[0].equals("003")) {
+				
 				List<SalesData> listSalesData = new ArrayList<SalesData>();
 
 				listSalesData.add(salesBuilder.getSalesData(data).build());
