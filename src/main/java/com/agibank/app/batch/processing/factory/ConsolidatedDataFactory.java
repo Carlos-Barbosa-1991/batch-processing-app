@@ -26,13 +26,24 @@ public class ConsolidatedDataFactory {
 			String[] data = line.split("ç");
 
 			if (data[0].equals("001")) {
-				consolidatedData.getSellerData().addAll(this.getSellerData(data));
+
+				List<SellerData> listSellerData = new ArrayList<SellerData>();
+
+				listSellerData.add(sellerBuilder.getSellerData(data).build());
+				consolidatedData.getSellerData().addAll(listSellerData);
 
 			} else if (data[0].equals("002")) {
-				consolidatedData.getClientData().addAll(this.getClientData(data));
+
+				List<ClientData> listClientData = new ArrayList<ClientData>();
+
+				listClientData.add(clientBuilder.getClientData(data).build());
+				consolidatedData.getClientData().addAll(listClientData);
 
 			} else if (data[0].equals("003")) {
-				consolidatedData.getSalesData().addAll(this.getSalesData(data));
+				List<SalesData> listSalesData = new ArrayList<SalesData>();
+
+				listSalesData.add(salesBuilder.getSalesData(data).build());
+				consolidatedData.getSalesData().addAll(listSalesData);
 
 			} else {
 				System.err.print("Arquivo fora do layout. Linha: [" + line + "]\n");
@@ -48,33 +59,4 @@ public class ConsolidatedDataFactory {
 
 	}
 
-	public List<SellerData> getSellerData(String[] data) {
-
-		List<SellerData> listSellerData = new ArrayList<SellerData>();
-
-		listSellerData.add(sellerBuilder.getSellerData(data).build());
-
-		return listSellerData;
-
-	}
-
-	public List<ClientData> getClientData(String[] data) {
-
-		List<ClientData> listClientData = new ArrayList<ClientData>();
-
-		listClientData.add(clientBuilder.getClientData(data).build());
-
-		return listClientData;
-
-	}
-
-	public List<SalesData> getSalesData(String[] data) {
-
-		List<SalesData> listSalesData = new ArrayList<SalesData>();
-
-		listSalesData.add(salesBuilder.getSalesData(data).build());
-
-		return listSalesData;
-
-	}
 }
