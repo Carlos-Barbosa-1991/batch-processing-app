@@ -12,7 +12,7 @@ import com.agibank.app.batch.processing.core.BatchProcessingCore;
 import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.LayoutFile;
 import com.agibank.app.batch.processing.factory.ConsolidatedDataFactory;
-import com.agibank.app.batch.processing.reports.ReportModels;
+import com.agibank.app.batch.processing.reports.ReportDefault;
 import com.agibank.app.batch.processing.validate.FileValidate;
 
 public class BatchProcessingService {
@@ -21,7 +21,7 @@ public class BatchProcessingService {
 	private File reportLocation = new File(System.getProperty("user.home"), "\\data\\out\\");
 	private FileValidate fileValidate = new FileValidate();
 	private BatchProcessingCore batchCore = new BatchProcessingCore();
-	private ReportModels reportModels = new ReportModels();
+	private ReportDefault reportModels = new ReportDefault();
 	private ConsolidatedDataFactory consolidatedDataFactory = new ConsolidatedDataFactory();
 
 	public void startProcessing() {

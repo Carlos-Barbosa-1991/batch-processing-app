@@ -14,7 +14,7 @@ import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.LayoutFile;
 import com.agibank.app.batch.processing.domain.SalesData;
 import com.agibank.app.batch.processing.domain.SellerData;
-import com.agibank.app.batch.processing.reports.ReportModels;
+import com.agibank.app.batch.processing.reports.ReportDefault;
 import com.agibank.app.batch.processing.utils.DistinctUtils;
 
 public class BatchProcessingCore {
@@ -25,7 +25,7 @@ public class BatchProcessingCore {
 	private String nameWorstSeller;
 	private LayoutFile layout = new LayoutFile();
 	private DistinctUtils distinctUtils = new DistinctUtils();
-	private ReportModels reportModels = new ReportModels();
+	private ReportDefault reportModels = new ReportDefault();
 
 	public BatchProcessingCore() {
 

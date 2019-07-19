@@ -8,7 +8,7 @@ import java.io.IOException;
 import com.agibank.app.batch.processing.domain.LayoutFile;
 import com.agibank.app.batch.processing.utils.FileUtils;
 
-public class ReportModels {
+public class ReportDefault {
 
 	private FileUtils fileUtils = new FileUtils();
 
