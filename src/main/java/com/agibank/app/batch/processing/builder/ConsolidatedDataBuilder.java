@@ -1,4 +1,4 @@
-package com.agibank.app.batch.processing.factory;
+package com.agibank.app.batch.processing.builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,14 @@ import com.agibank.app.batch.processing.domain.ClientData;
 import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.SalesData;
 import com.agibank.app.batch.processing.domain.SellerData;
-import com.agibank.app.batch.processing.builder.*;
 
-public class ConsolidatedDataFactory {
+public class ConsolidatedDataBuilder {
 
 	private SellerDataBuilder sellerBuilder = new SellerDataBuilder();
 	private ClientDataBuilder clientBuilder = new ClientDataBuilder();
 	private SalesDataBuilder salesBuilder = new SalesDataBuilder();
 
-	public ConsolidatedDataFactory() {
+	public ConsolidatedDataBuilder() {
 
 	};
 

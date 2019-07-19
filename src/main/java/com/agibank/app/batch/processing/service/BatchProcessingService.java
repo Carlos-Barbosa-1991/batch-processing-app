@@ -8,10 +8,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import com.agibank.app.batch.processing.builder.ConsolidatedDataBuilder;
 import com.agibank.app.batch.processing.core.BatchProcessingCore;
 import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.LayoutFile;
-import com.agibank.app.batch.processing.factory.ConsolidatedDataFactory;
 import com.agibank.app.batch.processing.reports.ReportDefault;
 import com.agibank.app.batch.processing.validate.FileValidate;
 
@@ -22,7 +22,7 @@ public class BatchProcessingService {
 	private FileValidate fileValidate = new FileValidate();
 	private BatchProcessingCore batchCore = new BatchProcessingCore();
 	private ReportDefault reportModels = new ReportDefault();
-	private ConsolidatedDataFactory consolidatedDataFactory = new ConsolidatedDataFactory();
+	private ConsolidatedDataBuilder consolidatedDataBuilder = new ConsolidatedDataBuilder();
 
 	public void startProcessing() {
 
@@ -53,7 +53,7 @@ public class BatchProcessingService {
 							List<String> linesFile = Files.readAllLines(path);
 
 							for (String line : linesFile) {
-								consolidatedData = consolidatedDataFactory.constructObjects(line, consolidatedData);
+								consolidatedData = consolidatedDataBuilder.constructObjects(line, consolidatedData);
 
 								if (consolidatedData == null) {
 									continue;
