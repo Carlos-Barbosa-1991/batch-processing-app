@@ -155,7 +155,7 @@ public class AppTest {
 	@Test
 	public void testTransformOk() throws Exception {
 		ConsolidatedData consolidatedData = new ConsolidatedData();
-		ConsolidatedDataBuilder consolidatedDataFactory = new ConsolidatedDataBuilder();
+		ConsolidatedDataBuilder consolidatedDataBuilder = new ConsolidatedDataBuilder();
 
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("001ç1234567891234çPedroç50000");
@@ -164,7 +164,7 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = consolidatedDataFactory.constructObjects(l, consolidatedData);
+			consolidatedData = consolidatedDataBuilder.constructObjects(l, consolidatedData);
 
 		}
 
@@ -188,7 +188,7 @@ public class AppTest {
 	@Test
 	public void testFileOutOfLayout() throws Exception {
 		ConsolidatedData consolidatedData = new ConsolidatedData();
-		ConsolidatedDataBuilder consolidatedDataFactory = new ConsolidatedDataBuilder();
+		ConsolidatedDataBuilder consolidatedDataBuilder = new ConsolidatedDataBuilder();
 
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("0011234567891234Pedro50000");
@@ -197,7 +197,7 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = consolidatedDataFactory.constructObjects(l, consolidatedData);
+			consolidatedData = consolidatedDataBuilder.constructObjects(l, consolidatedData);
 
 		}
 
