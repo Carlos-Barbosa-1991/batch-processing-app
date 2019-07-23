@@ -1,60 +1,60 @@
 package com.agibank.app.batch.processing.builder;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.agibank.app.batch.processing.domain.ClientData;
 import com.agibank.app.batch.processing.domain.ConsolidatedData;
-import com.agibank.app.batch.processing.domain.SalesData;
-import com.agibank.app.batch.processing.domain.SellerData;
 
 public class ConsolidatedDataBuilder {
 
 	private SellerDataBuilder sellerBuilder = new SellerDataBuilder();
 	private ClientDataBuilder clientBuilder = new ClientDataBuilder();
 	private SalesDataBuilder salesBuilder = new SalesDataBuilder();
+	private ConsolidatedData consolidatedTmp; 
 
 	public ConsolidatedDataBuilder() {
+		consolidatedTmp = new ConsolidatedData();
 
 	};
+	
+	public ConsolidatedData build() {
 
-	public ConsolidatedData constructObjects(String line, ConsolidatedData consolidatedData) {
+		ConsolidatedData consolidated = new ConsolidatedData();
+
+		consolidated.setSellerData(consolidatedTmp.getSellerData());
+		consolidated.setClientData(consolidatedTmp.getClientData());
+		consolidated.setSalesData(consolidatedTmp.getSalesData());
+
+		return consolidated;
+	}
+
+	public ConsolidatedDataBuilder getConsolidatedData(String line, ConsolidatedData consolidatedData) {
 
 		try {
-
+			
 			String[] data = line.split("ç");
 
 			if (data[0].equals("001")) {
 
-				List<SellerData> listSellerData = new ArrayList<SellerData>();
-
-				listSellerData.add(sellerBuilder.getSellerData(data).build());
-				consolidatedData.getSellerData().addAll(listSellerData);
+				consolidatedData.getSellerData().add(sellerBuilder.getSellerData(data).build());
 
 			} else if (data[0].equals("002")) {
 
-				List<ClientData> listClientData = new ArrayList<ClientData>();
-
-				listClientData.add(clientBuilder.getClientData(data).build());
-				consolidatedData.getClientData().addAll(listClientData);
+				consolidatedData.getClientData().add(clientBuilder.getClientData(data).build());
 
 			} else if (data[0].equals("003")) {
 				
-				List<SalesData> listSalesData = new ArrayList<SalesData>();
-
-				listSalesData.add(salesBuilder.getSalesData(data).build());
-				consolidatedData.getSalesData().addAll(listSalesData);
+				consolidatedData.getSalesData().add(salesBuilder.getSalesData(data).build());
 
 			} else {
 				System.err.print("Arquivo fora do layout. Linha: [" + line + "]\n");
-				return null;
+				
 			}
+			
+			consolidatedTmp = consolidatedData;
 
-			return consolidatedData;
+			return this;
 
 		} catch (Exception e) {
 			System.err.print("Arquivo fora do layout. Linha: [" + line + "]\n");
-			return null;
+			return this;
 		}
 
 	}

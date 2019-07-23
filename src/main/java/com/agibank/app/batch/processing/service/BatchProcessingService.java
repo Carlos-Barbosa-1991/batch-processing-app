@@ -53,9 +53,12 @@ public class BatchProcessingService {
 							List<String> linesFile = Files.readAllLines(path);
 
 							for (String line : linesFile) {
-								consolidatedData = consolidatedDataBuilder.constructObjects(line, consolidatedData);
+								consolidatedData = consolidatedDataBuilder.getConsolidatedData(line, consolidatedData)
+										.build();
 
-								if (consolidatedData == null) {
+								if (consolidatedData.getClientData().isEmpty()
+										|| consolidatedData.getSellerData().isEmpty()
+										|| consolidatedData.getSalesData().isEmpty()) {
 									continue;
 								}
 

@@ -89,7 +89,6 @@ public class BatchProcessingCore {
 			System.out.println("Não há vendas a serem processadas");
 			return false;
 		}
-		;
 
 		sellerData.forEach(seller -> {
 

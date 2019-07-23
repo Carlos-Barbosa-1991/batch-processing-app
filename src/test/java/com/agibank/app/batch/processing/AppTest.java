@@ -164,11 +164,13 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = consolidatedDataBuilder.constructObjects(l, consolidatedData);
+			consolidatedData = consolidatedDataBuilder.getConsolidatedData(l, consolidatedData).build();
 
 		}
 
-		Assert.assertNotNull(consolidatedData);
+		Assert.assertTrue(!consolidatedData.getSellerData().isEmpty());
+		Assert.assertTrue(!consolidatedData.getClientData().isEmpty());
+		Assert.assertTrue(!consolidatedData.getSalesData().isEmpty());
 
 	}
 
@@ -197,11 +199,13 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = consolidatedDataBuilder.constructObjects(l, consolidatedData);
+			consolidatedData = consolidatedDataBuilder.getConsolidatedData(l, consolidatedData).build();
 
 		}
 
-		Assert.assertNull(consolidatedData);
+		Assert.assertTrue(consolidatedData.getSellerData().isEmpty());
+		Assert.assertTrue(consolidatedData.getClientData().isEmpty());
+		Assert.assertTrue(consolidatedData.getSalesData().isEmpty());
 
 	}
 
