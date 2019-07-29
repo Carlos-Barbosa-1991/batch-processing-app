@@ -1,9 +1,11 @@
 # Processamento de Arquivo em Lote
 
 Para aplicação funcionar corretamente, devem ser inseridos arquivos ".dat" no caminho %HOMEPATH%\data\in com o layout abaixo.
-Caso o caminho não exista, deve ser criado.
 
-Layout esperado:
+
+**Obs.: Caso o caminho não exista, deve ser criado.**
+
+**Layout esperado:**
 
 001ç1234567891234çPedroç50000  
 001ç3245678865434çPauloç40000.99  
