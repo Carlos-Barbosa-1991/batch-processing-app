@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.agibank.app.batch.processing.builder.ConsolidatedDataBuilder;
 import com.agibank.app.batch.processing.builder.SalesDataBuilder;
 import com.agibank.app.batch.processing.core.BatchProcessingCore;
 import com.agibank.app.batch.processing.domain.ClientData;
@@ -19,6 +18,7 @@ import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.SalesData;
 import com.agibank.app.batch.processing.domain.SalesItems;
 import com.agibank.app.batch.processing.domain.SellerData;
+import com.agibank.app.batch.processing.factories.ConsolidatedDataFactory;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -155,7 +155,6 @@ public class AppTest {
 	@Test
 	public void testTransformOk() throws Exception {
 		ConsolidatedData consolidatedData = new ConsolidatedData();
-		ConsolidatedDataBuilder consolidatedDataBuilder = new ConsolidatedDataBuilder();
 
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("001ç1234567891234çPedroç50000");
@@ -164,7 +163,7 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = consolidatedDataBuilder.getConsolidatedData(l, consolidatedData).build();
+			consolidatedData = ConsolidatedDataFactory.getConsolidatedData(l, consolidatedData);
 
 		}
 
@@ -190,7 +189,6 @@ public class AppTest {
 	@Test
 	public void testFileOutOfLayout() throws Exception {
 		ConsolidatedData consolidatedData = new ConsolidatedData();
-		ConsolidatedDataBuilder consolidatedDataBuilder = new ConsolidatedDataBuilder();
 
 		ArrayList<String> line = new ArrayList<String>();
 		line.add("0011234567891234Pedro50000");
@@ -199,7 +197,7 @@ public class AppTest {
 
 		for (String l : line) {
 
-			consolidatedData = consolidatedDataBuilder.getConsolidatedData(l, consolidatedData).build();
+			consolidatedData = ConsolidatedDataFactory.getConsolidatedData(l, consolidatedData);
 
 		}
 
