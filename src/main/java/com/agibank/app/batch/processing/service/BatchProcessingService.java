@@ -56,16 +56,11 @@ public class BatchProcessingService {
 							}
 
 							try {
-								Boolean statusGenerateReport = batchCore.generateReport(consolidatedData,
-										filesIn[i].getName(), reportLocation);
+								batchCore.generateReport(consolidatedData, filesIn[i].getName(), reportLocation);
 
 								long elapsed = (System.currentTimeMillis() - start);
 								System.out.println("Arquivo: [" + filesIn[i].getName() + "]"
 										+ " Tempo de processamento em milissegundos: [" + elapsed + "ms ]");
-
-								if (!statusGenerateReport) {
-									continue;
-								}
 
 							} catch (Exception e) {
 								LayoutFile layout = new LayoutFile();
