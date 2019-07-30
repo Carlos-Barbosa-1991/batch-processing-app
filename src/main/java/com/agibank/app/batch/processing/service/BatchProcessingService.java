@@ -53,13 +53,6 @@ public class BatchProcessingService {
 
 							for (String line : linesFile) {
 								consolidatedData = ConsolidatedDataFactory.getConsolidatedData(line, consolidatedData);
-
-								if (consolidatedData.getClientData().isEmpty()
-										|| consolidatedData.getSellerData().isEmpty()
-										|| consolidatedData.getSalesData().isEmpty()) {
-									continue;
-								}
-
 							}
 
 							try {
