@@ -47,13 +47,10 @@ public class BatchProcessingService {
 							long start = System.currentTimeMillis();
 
 							Path path = Paths.get(filesIn[i].getPath());
-							ConsolidatedData consolidatedData = new ConsolidatedData();
 
 							List<String> linesFile = Files.readAllLines(path);
 
-							for (String line : linesFile) {
-								consolidatedData = ConsolidatedDataFactory.getConsolidatedData(line, consolidatedData);
-							}
+							ConsolidatedData consolidatedData = ConsolidatedDataFactory.getConsolidatedData(linesFile);
 
 							try {
 								batchCore.generateReport(consolidatedData, filesIn[i].getName(), reportLocation);

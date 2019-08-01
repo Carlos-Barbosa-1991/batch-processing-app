@@ -1,5 +1,7 @@
 package com.agibank.app.batch.processing.factories;
 
+import java.util.List;
+
 import com.agibank.app.batch.processing.builder.ClientDataBuilder;
 import com.agibank.app.batch.processing.builder.SalesDataBuilder;
 import com.agibank.app.batch.processing.builder.SellerDataBuilder;
@@ -11,35 +13,38 @@ public class ConsolidatedDataFactory {
 	private static ClientDataBuilder clientBuilder = new ClientDataBuilder();
 	private static SalesDataBuilder salesBuilder = new SalesDataBuilder();
 
-	public static ConsolidatedData getConsolidatedData(String line, ConsolidatedData consolidatedData) {
+	public static ConsolidatedData getConsolidatedData(List<String> linesFile) {
 
-		try {
-			
-			String[] data = line.split("ç");
+		ConsolidatedData consolidatedData = new ConsolidatedData();
 
-			if (data[0].equals("001")) {
+		for (String line : linesFile) {
 
-				consolidatedData.getSellerData().add(sellerBuilder.getSellerData(data).build());
+			try {
 
-			} else if (data[0].equals("002")) {
+				String[] data = line.split("ç");
 
-				consolidatedData.getClientData().add(clientBuilder.getClientData(data).build());
+				switch (data[0]) {
+				case "001":
+					consolidatedData.getSellerData().add(sellerBuilder.getSellerData(data).build());
+					break;
+				case "002":
+					consolidatedData.getClientData().add(clientBuilder.getClientData(data).build());
+					break;
+				case "003":
+					consolidatedData.getSalesData().add(salesBuilder.getSalesData(data).build());
+					break;
+				default:
+					System.err.print("Arquivo fora do layout. Linha: [" + line + "]\n");
+				}
 
-			} else if (data[0].equals("003")) {
-				
-				consolidatedData.getSalesData().add(salesBuilder.getSalesData(data).build());
-
-			} else {
+			} catch (Exception e) {
 				System.err.print("Arquivo fora do layout. Linha: [" + line + "]\n");
-				
+				return consolidatedData;
 			}
-			
-			return consolidatedData;
 
-		} catch (Exception e) {
-			System.err.print("Arquivo fora do layout. Linha: [" + line + "]\n");
-			return consolidatedData;
 		}
+
+		return consolidatedData;
 
 	}
 

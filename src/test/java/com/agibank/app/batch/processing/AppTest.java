@@ -154,18 +154,13 @@ public class AppTest {
 
 	@Test
 	public void testTransformOk() throws Exception {
-		ConsolidatedData consolidatedData = new ConsolidatedData();
 
-		ArrayList<String> line = new ArrayList<String>();
-		line.add("001ç1234567891234çPedroç50000");
-		line.add("002ç2345675434544345çJose da SilvaçRural");
-		line.add("003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çPedro");
+		ArrayList<String> lines = new ArrayList<String>();
+		lines.add("001ç1234567891234çPedroç50000");
+		lines.add("002ç2345675434544345çJose da SilvaçRural");
+		lines.add("003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çPedro");
 
-		for (String l : line) {
-
-			consolidatedData = ConsolidatedDataFactory.getConsolidatedData(l, consolidatedData);
-
-		}
+		ConsolidatedData consolidatedData = ConsolidatedDataFactory.getConsolidatedData(lines);
 
 		Assert.assertTrue(!consolidatedData.getSellerData().isEmpty());
 		Assert.assertTrue(!consolidatedData.getClientData().isEmpty());
@@ -188,18 +183,13 @@ public class AppTest {
 
 	@Test
 	public void testFileOutOfLayout() throws Exception {
-		ConsolidatedData consolidatedData = new ConsolidatedData();
 
-		ArrayList<String> line = new ArrayList<String>();
-		line.add("0011234567891234Pedro50000");
-		line.add("0022345675434544345Jose da SilvaRural");
-		line.add("00310ç[1-10-100,2-30-2.50,3-40-3.10]çPedro");
+		ArrayList<String> lines = new ArrayList<String>();
+		lines.add("0011234567891234Pedro50000");
+		lines.add("0022345675434544345Jose da SilvaRural");
+		lines.add("00310ç[1-10-100,2-30-2.50,3-40-3.10]çPedro");
 
-		for (String l : line) {
-
-			consolidatedData = ConsolidatedDataFactory.getConsolidatedData(l, consolidatedData);
-
-		}
+		ConsolidatedData consolidatedData = ConsolidatedDataFactory.getConsolidatedData(lines);
 
 		Assert.assertTrue(consolidatedData.getSellerData().isEmpty());
 		Assert.assertTrue(consolidatedData.getClientData().isEmpty());
