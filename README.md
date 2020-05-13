@@ -25,10 +25,10 @@
 6. Escreva no terminal: java -jar batch-processing-app-3.3.3-SNAPSHOT.jar e não feche o terminal aberto;
 7. O programa irá ler os arquivos ".dat" que estiverem na pasta %HOMEPATH%\data\in\;
 8. Será gerado na pasta %HOMEPATH%\data\out\ o arquivo ".done.dat" com as informações:
-8.1. Quantidade de clientes no arquivo de entrada;
-8.2. Quantidade de vendedores no arquivo de entrada;
-8.3. ID da venda mais cara;
-8.4. O pior vendedor.
+Quantidade de clientes no arquivo de entrada,
+Quantidade de vendedores no arquivo de entrada,
+ID da venda mais cara,
+O pior vendedor.
 
 Qualquer dúvida ou problema, entrar em contato com carlosbarbosasama@gmail.com.
 
