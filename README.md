@@ -22,7 +22,13 @@
 3. Navegue com seu terminal até a pasta do projeto, na raiz se encontrará o arquivo pom.xml;
 4. Execute o comando "mvn clean install" para compilar o projeto;
 5. Navegue com seu terminal até a pasta "target" do projeto, lá se encontrará o arquivo .jar;
-6. escreva no terminal: java -jar batch-processing-app-3.3.3-SNAPSHOT.jar e não feche o terminal aberto;
+6. Escreva no terminal: java -jar batch-processing-app-3.3.3-SNAPSHOT.jar e não feche o terminal aberto;
+7. O programa irá ler os arquivos ".dat" que estiverem na pasta %HOMEPATH%\data\in\;
+8. Será gerado na pasta %HOMEPATH%\data\out\ o arquivo ".done.dat" com as informações:
+8.1. Quantidade de clientes no arquivo de entrada;
+8.2. Quantidade de vendedores no arquivo de entrada;
+8.3. ID da venda mais cara;
+8.4. O pior vendedor.
 
 Qualquer dúvida ou problema, entrar em contato com carlosbarbosasama@gmail.com.
 
