@@ -1,96 +1,90 @@
 package com.agibank.app.batch.processing.service;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
 import com.agibank.app.batch.processing.core.BatchProcessingCore;
 import com.agibank.app.batch.processing.domain.ConsolidatedData;
 import com.agibank.app.batch.processing.domain.LayoutFile;
 import com.agibank.app.batch.processing.factories.ConsolidatedDataFactory;
 import com.agibank.app.batch.processing.reports.ReportDefault;
 import com.agibank.app.batch.processing.validate.FileValidate;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class BatchProcessingService {
 
-	private File fileLocation = new File(System.getProperty("user.home"), "\\data\\in\\");
-	private File reportLocation = new File(System.getProperty("user.home"), "\\data\\out\\");
-	private FileValidate fileValidate = new FileValidate();
-	private BatchProcessingCore batchCore = new BatchProcessingCore();
-	private ReportDefault reportModels = new ReportDefault();
+  private final File fileLocation = new File(System.getProperty("user.home"), "\\data\\in\\");
+  private final File reportLocation = new File(System.getProperty("user.home"), "\\data\\out\\");
+  private final FileValidate fileValidate = new FileValidate();
+  private final BatchProcessingCore batchCore = new BatchProcessingCore();
+  private final ReportDefault reportModels = new ReportDefault();
 
-	public void startProcessing() {
+  public void startProcessing() {
 
-		try {
+    try {
 
-			File[] filesIn = this.repositoryListener();
+      File[] filesIn = this.repositoryListener();
 
-			int initialQueue = filesIn.length - 1;
-			int finalQueue = filesIn.length + 1;
+      int initialQueue = filesIn.length - 1;
+      int finalQueue = filesIn.length + 1;
 
-			do {
+      do {
 
-				if (filesIn.length > initialQueue) {
-					filesIn = this.repositoryListener();
-					initialQueue = filesIn.length - 1;
-					finalQueue = filesIn.length + 1;
+        if (filesIn.length > initialQueue) {
+          filesIn = this.repositoryListener();
+          initialQueue = filesIn.length - 1;
+          finalQueue = filesIn.length + 1;
 
-					for (int i = 0; i < filesIn.length; i++) {
+          for (File file : filesIn) {
 
-						if (!fileValidate.validateFileExistence(filesIn[i].getName(), reportLocation)) {
+            if (!fileValidate.validateFileExistence(file.getName(), reportLocation)) {
 
-							System.out.println("\nInício do processamento do arquivo: [" + filesIn[i].getName() + "]");
-							long start = System.currentTimeMillis();
+              System.out
+                  .println("\nInício do processamento do arquivo: [" + file.getName() + "]");
 
-							Path path = Paths.get(filesIn[i].getPath());
+              long start = System.currentTimeMillis();
 
-							List<String> linesFile = Files.readAllLines(path);
+              Path path = Paths.get(file.getPath());
 
-							ConsolidatedData consolidatedData = ConsolidatedDataFactory.getConsolidatedData(linesFile);
+              List<String> linesFile = Files.readAllLines(path);
 
-							try {
-								batchCore.generateReport(consolidatedData, filesIn[i].getName(), reportLocation);
+              ConsolidatedData consolidatedData = ConsolidatedDataFactory
+                  .getConsolidatedData(linesFile);
 
-								long elapsed = (System.currentTimeMillis() - start);
-								System.out.println("Arquivo: [" + filesIn[i].getName() + "]"
-										+ " Tempo de processamento em milissegundos: [" + elapsed + "ms ]");
+              try {
+                batchCore.generateReport(consolidatedData, file.getName(), reportLocation);
 
-							} catch (Exception e) {
-								LayoutFile layout = new LayoutFile();
-								reportModels.exportDefaultReport(filesIn[i].getName(), layout, reportLocation);
-								e.printStackTrace();
-								continue;
-							}
-						}
-					}
-				}
+                long elapsed = (System.currentTimeMillis() - start);
 
-			} while (filesIn.length < finalQueue);
+                System.out.println("Arquivo: [" + file.getName() + "]"
+                    + " Tempo de processamento em milissegundos: [" + elapsed + "ms ]");
 
-		} catch (Exception e) {
-			System.err.printf("Erro ao processar arquivos\n");
-			e.printStackTrace();
-		}
+              } catch (Exception e) {
+                LayoutFile layout = new LayoutFile();
+                reportModels.exportDefaultReport(file.getName(), layout, reportLocation);
+                e.printStackTrace();
+              }
+            }
+          }
+        }
 
-	};
+      } while (filesIn.length < finalQueue);
 
-	public File[] repositoryListener() throws IOException, InterruptedException {
+    } catch (Exception e) {
+      System.err.print("Erro ao processar arquivos\n");
+      e.printStackTrace();
+    }
 
-		// Delay devido a demora do sistema para escrever o arquivo na pasta de entrada
-		Thread.sleep(2000);
+  }
 
-		File[] fileIn = fileLocation.listFiles(new FileFilter() {
-			public boolean accept(File b) {
-				return b.getName().endsWith(".dat");
-			}
-		});
+  public File[] repositoryListener() throws Exception {
 
-		return fileIn;
+    // Delay devido a demora do sistema para escrever o arquivo na pasta de entrada
+    Thread.sleep(2000);
 
-	};
+    return fileLocation.listFiles(b -> b.getName().endsWith(".dat"));
+
+  }
 
 }

@@ -1,29 +1,23 @@
 package com.agibank.app.batch.processing.validate;
 
-import java.io.File;
-
 import com.agibank.app.batch.processing.utils.FileUtils;
+import java.io.File;
 
 public class FileValidate {
 
-	private FileUtils fileUtils = new FileUtils();
+  private final FileUtils fileUtils = new FileUtils();
 
-	public FileValidate() {
+  public FileValidate() {
+  }
 
-	}
+  public Boolean validateFileExistence(String fileName, File reportLocation) {
 
-	public Boolean validateFileExistence(String fileName, File reportLocation) {
+    String properFileName = fileUtils.removeExtentionFileName(fileName);
 
-		String properFileName = fileUtils.removeExtentionFileName(fileName);
+    File file = new File(reportLocation, "" + properFileName + ".done.dat");
 
-		File file = new File(reportLocation, "" + properFileName + ".done.dat");
+    return file.exists();
 
-		if (file.exists()) {
-			return true;
-		} else {
-			return false;
-		}
-
-	};
+  }
 
 }

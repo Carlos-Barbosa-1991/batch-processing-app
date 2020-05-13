@@ -1,37 +1,36 @@
 package com.agibank.app.batch.processing.builder;
 
-import java.math.BigDecimal;
-
 import com.agibank.app.batch.processing.domain.SellerData;
+import java.math.BigDecimal;
 
 public class SellerDataBuilder {
 
-	private SellerData sellerTmp;
+  private final SellerData sellerTmp;
 
-	public SellerDataBuilder() {
-		sellerTmp = new SellerData();
-	}
+  public SellerDataBuilder() {
+    sellerTmp = new SellerData();
+  }
 
-	public SellerData build() {
+  public SellerData build() {
 
-		SellerData seller = new SellerData();
+    SellerData seller = new SellerData();
 
-		seller.setIdData(sellerTmp.getIdData());
-		seller.setCpf(sellerTmp.getCpf());
-		seller.setName(sellerTmp.getName());
-		seller.setSalary(sellerTmp.getSalary());
+    seller.setIdData(sellerTmp.getIdData());
+    seller.setCpf(sellerTmp.getCpf());
+    seller.setName(sellerTmp.getName());
+    seller.setSalary(sellerTmp.getSalary());
 
-		return seller;
-	}
+    return seller;
+  }
 
-	public SellerDataBuilder getSellerData(String[] data) {
+  public SellerDataBuilder getSellerData(String[] data) {
 
-		sellerTmp.setIdData(data[0]);
-		sellerTmp.setCpf(data[1]);
-		sellerTmp.setName(data[2]);
-		sellerTmp.setSalary(new BigDecimal(data[3]));
+    sellerTmp.setIdData(data[0]);
+    sellerTmp.setCpf(data[1]);
+    sellerTmp.setName(data[2]);
+    sellerTmp.setSalary(new BigDecimal(data[3]));
 
-		return this;
-	}
+    return this;
+  }
 
 }

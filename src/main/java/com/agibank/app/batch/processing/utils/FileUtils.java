@@ -2,13 +2,9 @@ package com.agibank.app.batch.processing.utils;
 
 public class FileUtils {
 
-	public String removeExtentionFileName(String file) {
+  public String removeExtentionFileName(String file) {
+    return file.substring(0, file.lastIndexOf("."));
 
-		int lastIndex = file.lastIndexOf(".");
-		String fileNameFitting = file.substring(0, lastIndex);
-
-		return fileNameFitting;
-
-	};
+  }
 
 }
